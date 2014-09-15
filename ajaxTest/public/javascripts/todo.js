@@ -58,6 +58,10 @@ function getTodo(){
 			if(lists.length===0){
 				$list.append('<p>ToDoは登録されていません</p>');
 			}
+			// 時系列順にソート
+      		lists.sort(function(a,b){
+      			return new Date(a.createdDate) < new Date(b.createdDate) ? 1:-1;
+      		});
 			$.each(lists,function(index,todo){
 				var c = '';
 				if(todo.isCheck){
