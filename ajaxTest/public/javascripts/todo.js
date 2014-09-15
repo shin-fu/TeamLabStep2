@@ -143,18 +143,35 @@ function getList(){
 });
 }
 
+function escapeText(text) {
+    return $("<div>").text(text).html();
+}
+
+// 入力チェックを行う
+function checkText(text,isList) {
+    // 文字数が0または30以上は不可
+    if (0 === text.length || 30 < text.length) {
+	    alert("文字数は1〜30字にしてください");
+	    return false;
+	}
+	return true;
+}
+
 // フォームに入力されたListを追加する
 function postList(){
   // フォームに入力された値を取得
   var name = $('#text').val();
+  name = escapeText(name);
   //入力項目を空にする
   $('#text').val('');
   // /listにPOSTアクセスする
-  $.post('/list', {name: name}, function(res){
-  	console.log(res);
-    //再度表示する
-    flash();
-  });
+	if(checkText(name)){
+	  $.post('/list', {name: name}, function(res){
+	  	console.log(res);
+	    //再度表示する
+	    flash();
+	  });
+	}
 }
 
 function postTodo(){
@@ -164,10 +181,13 @@ function postTodo(){
 	console.log(name);
 	$('#text').val('');
 	$('#limit').val('');
-	$.post('/todo',{name:name,limit:limitDate,root:root},function(res){
-		console.log(res);
-		flash();
-	});
+	name = escapeText(name);
+	if(checkText(name)){
+		$.post('/todo',{name:name,limit:limitDate,root:root},function(res){
+			console.log(res);
+			flash();
+		});
+	}
 }
 
 function getSearch(){
