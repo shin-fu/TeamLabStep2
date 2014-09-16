@@ -134,7 +134,7 @@ function getList(){
 	      		});
       		flash();
 	      	});
-	      	$('#'+list.text).css('cursor','pointer');
+	      	$('#'+list._id).css('cursor','pointer');
       	});
       });
       // 一覧を表示する
